@@ -4,5 +4,6 @@
  <widget class="QWidget" name="paginaprojetos">
   <layout class="QVBoxLayout" name="verticalLayout"/>
  </widget>
- <resources/><connections/>
+ <resources/>
+ <connections/>
 </ui>

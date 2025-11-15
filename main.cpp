@@ -1,10 +1,11 @@
-// main.cpp
 #include <QApplication>
-#include "ui/telas/janelaprincipal.h"
+#include "janelaprincipal.h"
 
-int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
     JanelaPrincipal w;
+    w.setMinimumSize(900, 600);
     w.show();
-    return app.exec();
+    return a.exec();
 }

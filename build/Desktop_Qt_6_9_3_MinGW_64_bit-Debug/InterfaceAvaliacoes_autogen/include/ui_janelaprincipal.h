@@ -57,7 +57,7 @@ public:
 
     void retranslateUi(QMainWindow *JanelaPrincipal)
     {
-        (void)JanelaPrincipal;
+        JanelaPrincipal->setWindowTitle(QCoreApplication::translate("JanelaPrincipal", "Interface de Avaliacoes", nullptr));
     } // retranslateUi
 
 };
