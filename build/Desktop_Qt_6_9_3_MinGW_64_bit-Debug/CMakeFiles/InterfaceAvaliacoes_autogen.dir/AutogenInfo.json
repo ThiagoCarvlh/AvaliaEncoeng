@@ -295,6 +295,24 @@
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginAdditionalTargetInfo.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessAliasTargets.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportConfigVersion.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportConfigVersionImpl.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportDependencies.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportTargets.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportTargets-relwithdebinfo.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportAdditionalTargetInfo.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateConfigVersion.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateConfigVersionImpl.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateConfig.cmake",
+		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateDependencies.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateTargets.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateAdditionalTargetInfo.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate/Qt6PrintSupportPrivateVersionlessAliasTargets.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportPlugins.cmake",
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportVersionlessAliasTargets.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6Config.cmake",
@@ -365,6 +383,12 @@
 			null
 		],
 		[
+			"C:/Users/Usuario/Documents/InterfaceAvaliacoes/ui/telas/paginafichas.h",
+			"MU",
+			"E766YBBN5G/moc_paginafichas.cpp",
+			null
+		],
+		[
 			"C:/Users/Usuario/Documents/InterfaceAvaliacoes/ui/telas/paginanotas.h",
 			"MU",
 			"E766YBBN5G/moc_paginanotas.cpp",
@@ -385,6 +409,7 @@
 		"MINGW_HAS_SECURE_API=1",
 		"QT_CORE_LIB",
 		"QT_GUI_LIB",
+		"QT_PRINTSUPPORT_LIB",
 		"QT_WIDGETS_LIB",
 		"UNICODE",
 		"WIN32",
@@ -408,6 +433,7 @@
 		"C:/Qt/6.9.3/mingw_64/mkspecs/win32-g++",
 		"C:/Qt/6.9.3/mingw_64/include/QtWidgets",
 		"C:/Qt/6.9.3/mingw_64/include/QtGui",
+		"C:/Qt/6.9.3/mingw_64/include/QtPrintSupport",
 		"C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++",
 		"C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32",
 		"C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward",
@@ -461,6 +487,11 @@
 		],
 		[
 			"C:/Users/Usuario/Documents/InterfaceAvaliacoes/ui/telas/paginaavaliadores.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Usuario/Documents/InterfaceAvaliacoes/ui/telas/paginafichas.cpp",
 			"MU",
 			null
 		],

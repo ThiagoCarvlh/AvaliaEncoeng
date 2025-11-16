@@ -5,6 +5,7 @@
 class PaginaProjetos;
 class PaginaAvaliadores;
 class PaginaNotas;
+class PaginaFichas;  // ← ADICIONAR
 
 namespace Ui { class JanelaPrincipal; }
 
@@ -19,4 +20,5 @@ private:
     PaginaProjetos*     m_pagProjetos{nullptr};
     PaginaAvaliadores*  m_pagAvaliadores{nullptr};
     PaginaNotas*        m_pagNotas{nullptr};
+    PaginaFichas*       m_pagFichas{nullptr};  // ← ADICIONAR
 };

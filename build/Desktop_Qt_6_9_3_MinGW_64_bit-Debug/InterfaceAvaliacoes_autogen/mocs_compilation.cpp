@@ -2,5 +2,6 @@
 #include "E766YBBN5G/moc_dialogologin.cpp"
 #include "E766YBBN5G/moc_janelaprincipal.cpp"
 #include "E766YBBN5G/moc_paginaavaliadores.cpp"
+#include "E766YBBN5G/moc_paginafichas.cpp"
 #include "E766YBBN5G/moc_paginanotas.cpp"
 #include "E766YBBN5G/moc_paginaprojetos.cpp"

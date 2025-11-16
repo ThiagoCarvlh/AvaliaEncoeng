@@ -352,6 +352,12 @@ Qt6GuiTools_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6GuiTools
 //The directory containing a CMake configuration file for Qt6Gui.
 Qt6Gui_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Gui
 
+//The directory containing a CMake configuration file for Qt6PrintSupportPrivate.
+Qt6PrintSupportPrivate_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupportPrivate
+
+//The directory containing a CMake configuration file for Qt6PrintSupport.
+Qt6PrintSupport_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6PrintSupport
+
 //The directory containing a CMake configuration file for Qt6WidgetsPrivate.
 Qt6WidgetsPrivate_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6WidgetsPrivate
 
@@ -659,6 +665,12 @@ QT_FEATURE_cross_compile:INTERNAL=OFF
 QT_FEATURE_cssparser:INTERNAL=ON
 //Qt feature: ctf (from target Qt6::Core)
 QT_FEATURE_ctf:INTERNAL=OFF
+//Qt feature: cups (from target Qt6::PrintSupport)
+QT_FEATURE_cups:INTERNAL=OFF
+//Qt feature: cupsjobwidget (from target Qt6::PrintSupport)
+QT_FEATURE_cupsjobwidget:INTERNAL=OFF
+//Qt feature: cupspassworddialog (from target Qt6::PrintSupport)
+QT_FEATURE_cupspassworddialog:INTERNAL=ON
 //Qt feature: cursor (from target Qt6::Gui)
 QT_FEATURE_cursor:INTERNAL=ON
 //Qt feature: cxx11_future (from target Qt6::Core)
@@ -1029,6 +1041,14 @@ QT_FEATURE_posix_sem:INTERNAL=ON
 QT_FEATURE_posix_shm:INTERNAL=OFF
 //Qt feature: precompile_header (from target Qt6::Core)
 QT_FEATURE_precompile_header:INTERNAL=ON
+//Qt feature: printdialog (from target Qt6::PrintSupport)
+QT_FEATURE_printdialog:INTERNAL=ON
+//Qt feature: printer (from target Qt6::PrintSupport)
+QT_FEATURE_printer:INTERNAL=ON
+//Qt feature: printpreviewdialog (from target Qt6::PrintSupport)
+QT_FEATURE_printpreviewdialog:INTERNAL=ON
+//Qt feature: printpreviewwidget (from target Qt6::PrintSupport)
+QT_FEATURE_printpreviewwidget:INTERNAL=ON
 //Qt feature: printsupport (from target Qt6::Core)
 QT_FEATURE_printsupport:INTERNAL=ON
 //Qt feature: private_tests (from target Qt6::Core)

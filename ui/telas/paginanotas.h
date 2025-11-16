@@ -19,7 +19,6 @@ private slots:
     void onEditar();
     void onRemover();
     void onRecarregar();
-
 private:
     Ui::PaginaNotas*    ui;
     QTableView*         m_table{};

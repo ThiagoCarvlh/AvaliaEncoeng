@@ -3,10 +3,10 @@
 4;Análise Preditiva;Modelo de IA para prever evasão de alunos.;Prof. Dr. Carlos Andrade;Graduação - Engenharia de Software
 5;VisãoMed;Rede neural para auxílio em diagnóstico médico.;Prof. Me. Ricardo Souza;Graduação - Engenharia de Software
 6;EcoCharge;Estação de recarga solar para veículos elétricos.;Prof. Dr. Mário Silveira;Graduação - Engenharia de Software
-7;Portal B2B;Plataforma web para transações entre empresas.;Profa. Me. Lúcia Ferreira;Graduação - Engenharia de Software
 8;Estufa Connect;Sistema IoT para monitoramento de umidade.;Prof. João Mendes;Técnico - Automação Industrial
 9;GestorMEI;App Android para controle de estoque de MEIs.;Profa. Ana Clara Dias;Técnico - Informática
 10;HelpDesk Fácil;Sistema web para abertura de chamados internos.;Prof. Bruno Costa;Técnico - Informática
 11;Kit ArduEduca;Protótipo de robótica para ensino fundamental.;Prof. Felipe Borges;Técnico - Eletrônica
 12;Rede PME Segura;Implementação de firewall e VPN em PMEs.;Profa. Renata Guimarães;Técnico - Informática (com ênfase em Programação)
 13;MAPU;Sistema que faz monitoramento operacional em terrenos privados;Luan Palma da Silva;Graduação - Engenharia de Software
+14;CredenciaEcoeng;Software que automatiza emissao de certificados;Luan Palma;Graduação - Engenharia de Software
