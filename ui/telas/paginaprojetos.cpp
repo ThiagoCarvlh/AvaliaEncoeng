@@ -61,10 +61,26 @@ protected:
         return okNome && okCat;
     }
 
+    // ordenar ID como número, não como texto
+    bool lessThan(const QModelIndex& left,
+                  const QModelIndex& right) const override
+    {
+        if (left.column() == 0 && right.column() == 0 && sourceModel()) {
+            bool ok1 = false, ok2 = false;
+            int v1 = sourceModel()->data(left,  Qt::DisplayRole).toInt(&ok1);
+            int v2 = sourceModel()->data(right, Qt::DisplayRole).toInt(&ok2);
+
+            if (ok1 && ok2)
+                return v1 < v2;
+        }
+        return QSortFilterProxyModel::lessThan(left, right);
+    }
+
 private:
     QString m_nomeFiltro;
     QString m_categoriaFiltro;
 };
+
 
 // ================== Helpers internos (diálogo de projeto) ==================
 
@@ -92,15 +108,25 @@ struct ProjetoData {
 static void preencherCategorias(QComboBox* combo, bool tecnico) {
     combo->clear();
     if (tecnico) {
+        // ----- CURSOS TÉCNICOS -----
         combo->addItem("Automação Industrial");
         combo->addItem("Eletrônica");
-        combo->addItem("Informática");
-        combo->addItem("Outros (Técnico)");
+        combo->addItem("Eletrotécnica");
+        combo->addItem("Informática (com ênfase em Programação)");
+        combo->addItem("Mecânica");
+        combo->addItem("Mecatrônica");
+        combo->addItem("Qualidade");
+        combo->addItem("Logística");
+        combo->addItem("Segurança do Trabalho");
     } else {
+        // ----- CURSOS DE GRADUAÇÃO -----
+        combo->addItem("Administração");
+        combo->addItem("Ciência da Computação");
+        combo->addItem("Engenharia da Computação");
+        combo->addItem("Engenharia de Produção");
         combo->addItem("Engenharia de Software");
-        combo->addItem("Eng. Controle e Automação");
-        combo->addItem("Engenharia Civil");
-        combo->addItem("Outros (Graduação)");
+        combo->addItem("Engenharia Elétrica");
+        combo->addItem("Engenharia Mecânica");
     }
 }
 
@@ -110,26 +136,42 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
     dlg.setWindowTitle(edicao ? "Editar Projeto" : "Novo Projeto");
     dlg.setModal(true);
 
-    auto* mainLayout = new QVBoxLayout(&dlg);
+    // herda o mesmo tema da tela de Projetos
+    dlg.setStyleSheet(parent->styleSheet());
 
-    auto* titulo = new QLabel(edicao ? "Editar projeto" : "Novo projeto", &dlg);
+    auto* mainLayout = new QVBoxLayout(&dlg);
+    mainLayout->setSpacing(16);
+    mainLayout->setContentsMargins(24, 24, 24, 24);
+
+    auto* titulo = new QLabel(edicao ? "  Editar Projeto" : "  Novo Projeto", &dlg);
     QFont f = titulo->font();
-    f.setPointSize(f.pointSize() + 2);
+    f.setPointSize(f.pointSize() + 4);
     f.setBold(true);
     titulo->setFont(f);
+    titulo->setStyleSheet("color: #00D4FF; padding-bottom: 8px;");
     mainLayout->addWidget(titulo);
 
     // ---- Dados do projeto ----
-    auto* boxDados = new QGroupBox("Dados do Projeto", &dlg);
+    auto* boxDados = new QGroupBox(" Dados do Projeto", &dlg);
     auto* formDados = new QFormLayout(boxDados);
+    formDados->setSpacing(12);
+    formDados->setContentsMargins(16, 20, 16, 16);
 
     auto* edNome  = new QLineEdit(data.nome, &dlg);
     auto* edDesc  = new QLineEdit(data.descricao, &dlg);
     auto* edResp  = new QLineEdit(data.responsavel, &dlg);
 
+    edNome->setPlaceholderText("Digite o nome do projeto");
+    edDesc->setPlaceholderText("Breve descrição do projeto");
+    edResp->setPlaceholderText("Nome do responsável");
+
     auto* lblNomeStatus = new QLabel(" ", &dlg);
     auto* lblDescStatus = new QLabel(" ", &dlg);
     auto* lblRespStatus = new QLabel(" ", &dlg);
+
+    lblNomeStatus->setStyleSheet("font-size: 11px; padding-left: 4px;");
+    lblDescStatus->setStyleSheet("font-size: 11px; padding-left: 4px;");
+    lblRespStatus->setStyleSheet("font-size: 11px; padding-left: 4px;");
 
     formDados->addRow("Nome:", edNome);
     formDados->addRow("", lblNomeStatus);
@@ -138,12 +180,13 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
     formDados->addRow("Responsável:", edResp);
     formDados->addRow("", lblRespStatus);
 
-    boxDados->setLayout(formDados);
     mainLayout->addWidget(boxDados);
 
     // ---- Categoria / Especialidade ----
-    auto* boxCat = new QGroupBox("Área / Especialidade", &dlg);
+    auto* boxCat = new QGroupBox(" Categoria e Especialização", &dlg);
     auto* layCat = new QVBoxLayout(boxCat);
+    layCat->setSpacing(12);
+    layCat->setContentsMargins(16, 20, 16, 16);
 
     auto* linhaRadios = new QHBoxLayout();
     auto* rbTec  = new QRadioButton("Técnico", &dlg);
@@ -180,14 +223,22 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
     QObject::connect(rbGrad, &QRadioButton::toggled, &dlg,
                      [&](bool checked){ if (checked) preencherCategorias(cbArea, false); });
 
-    boxCat->setLayout(layCat);
     mainLayout->addWidget(boxCat);
 
     // ---- Botões ----
     auto* buttons = new QDialogButtonBox(
         QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
         Qt::Horizontal, &dlg);
-    buttons->button(QDialogButtonBox::Ok)->setText("Salvar");
+    auto* btnOk = buttons->button(QDialogButtonBox::Ok);
+    auto* btnCancel = buttons->button(QDialogButtonBox::Cancel);
+
+    if (btnOk) {
+        btnOk->setText(" Salvar");
+    }
+    if (btnCancel) {
+        btnCancel->setText("Cancelar");
+    }
+
     mainLayout->addWidget(buttons);
 
     QObject::connect(buttons, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
@@ -196,14 +247,12 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
     // ---- Estilo das mensagens de status ----
     auto setOk = [](QLabel* lbl, const QString& txt){
         lbl->setText(QString("✓ %1").arg(txt));
-        lbl->setStyleSheet("color:#4EC9B0;");
+        lbl->setStyleSheet("color: #00FF88; font-size: 11px; padding-left: 4px;");
     };
     auto setErr = [](QLabel* lbl, const QString& txt){
-        lbl->setText(txt);
-        lbl->setStyleSheet("color:#F48771;");
+        lbl->setText(QString("✗ %1").arg(txt));
+        lbl->setStyleSheet("color: #FF6B9D; font-size: 11px; padding-left: 4px;");
     };
-
-    auto* btnSalvar = buttons->button(QDialogButtonBox::Ok);
 
     auto atualizarValidacao = [&]() {
         const bool okNome = nomeValido(edNome->text());
@@ -211,15 +260,16 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
         const bool okResp = responsavelValido(edResp->text());
 
         if (okNome)  setOk(lblNomeStatus,  "Nome válido");
-        else         setErr(lblNomeStatus, "Nome muito curto");
+        else         setErr(lblNomeStatus, "Nome muito curto (mínimo 3 caracteres)");
 
         if (okDesc)  setOk(lblDescStatus,  "Descrição válida");
-        else         setErr(lblDescStatus, "Descrição muito curta");
+        else         setErr(lblDescStatus, "Descrição muito curta (mínimo 5 caracteres)");
 
         if (okResp)  setOk(lblRespStatus,  "Responsável válido");
-        else         setErr(lblRespStatus, "Responsável muito curto");
+        else         setErr(lblRespStatus, "Responsável muito curto (mínimo 3 caracteres)");
 
-        btnSalvar->setEnabled(okNome && okDesc && okResp);
+        if (btnOk)
+            btnOk->setEnabled(okNome && okDesc && okResp);
     };
 
     QObject::connect(edNome, &QLineEdit::textChanged,
@@ -230,9 +280,6 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
                      &dlg, [&](const QString&){ atualizarValidacao(); });
 
     atualizarValidacao();
-
-    // herda tema escuro
-    dlg.setStyleSheet(parent->styleSheet());
 
     if (dlg.exec() == QDialog::Accepted) {
         data.nome        = edNome->text().trimmed();
@@ -248,6 +295,7 @@ static bool abrirDialogoProjeto(QWidget* parent, ProjetoData& data, bool edicao)
 
 } // namespace
 
+
 // ================== CONSTRUTOR / SETUP ==================
 
 PaginaProjetos::PaginaProjetos(QWidget* parent)
@@ -256,11 +304,11 @@ PaginaProjetos::PaginaProjetos(QWidget* parent)
     , m_table(new QTableView(this))
     , m_model(new QStandardItemModel(0, 5, this)) // ID, Nome, Descrição, Responsável, Área/Categoria
     , m_filter(new ProjetoFilterModel(this))
-    , m_btnNovo(new QPushButton("+ Add", this))
-    , m_btnEditar(new QPushButton("Editar", this))
-    , m_btnRemover(new QPushButton("Excluir", this))
-    , m_btnRecarregar(new QPushButton("Recarregar", this))
-    , m_btnExportCsv(new QPushButton("Exportar CSV", this))
+    , m_btnNovo(new QPushButton(" Adicionar", this))
+    , m_btnEditar(new QPushButton(" Editar", this))
+    , m_btnRemover(new QPushButton(" Excluir", this))
+    , m_btnRecarregar(new QPushButton(" Recarregar", this))
+    , m_btnExportCsv(new QPushButton(" Exportar CSV", this))
     , m_labelTotal(new QLabel(this))
     , m_editBusca(new QLineEdit(this))
     , m_comboCategoria(new QComboBox(this))
@@ -270,61 +318,231 @@ PaginaProjetos::PaginaProjetos(QWidget* parent)
     // para o stylesheet pegar
     this->setObjectName("paginaprojetos");
 
-    // Mesmo tema escuro da tela de Avaliadores
+    // ===== Mesmo tema da tela de Avaliadores =====
     this->setStyleSheet(R"(
-QWidget#paginaprojetos {
-    background-color: #1E1E1E;
-    color: #FFFFFF;
-}
-QTableView {
-    background-color: #2D2D30;
-    alternate-background-color: #252526;
-    gridline-color: #3F3F46;
-    selection-background-color: #0E639C;
-    selection-color: #FFFFFF;
-    border: 1px solid #3F3F46;
-}
-QHeaderView::section {
-    background-color: #2D2D30;
-    color: #CCCCCC;
-    padding: 6px;
-    border: 1px solid #3F3F46;
-}
-QLineEdit, QComboBox {
-    background-color: #252526;
-    border: 1px solid #3F3F46;
-    padding: 4px 6px;
-    color: #FFFFFF;
-}
-QPushButton {
-    background-color: #0E639C;
-    border-radius: 4px;
-    padding: 6px 12px;
-    color: #FFFFFF;
-    border: none;
-}
-QPushButton#btnDangerProjeto {
-    background-color: #F48771;
-}
-QLabel#labelTotalProjetos {
-    color: #CCCCCC;
-}
-)");
+        QWidget#paginaprojetos {
+           background-color: #05070d;
+           background-image: url(:/img/img/Logo.jpg);
+           background-position: center bottom;
+           background-repeat: no-repeat;
+        }
+
+        QLabel#titulo {
+            color: #00D4FF;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px 0px;
+        }
+
+        QTableView {
+            background-color: transparent;
+            alternate-background-color: rgba(32, 42, 60, 0.85);
+            gridline-color: #2a3f5f;
+            selection-color: #FFFFFF;
+            border: 2px solid #2a3f5f;
+            border-radius: 10px;
+            color: #E0E0E0;
+        }
+
+        QTableView::viewport {
+            background-color: rgba(26, 35, 50, 0.85);
+            background-image: url(:/img/img/Logo.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        QTableView::item {
+            padding: 10px 8px;
+            border: none;
+        }
+
+        QTableView::item:hover {
+            background-color: rgba(0, 168, 204, 0.15);
+        }
+
+        QTableView::item:selected {
+            background-color: rgba(0, 220, 255, 0.35);
+            border: none;
+            color: #FFFFFF;
+        }
+
+        QHeaderView::section {
+            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #1a2840, stop:1 #15202f);
+            color: #00D4FF;
+            padding: 12px 8px;
+            border: none;
+            border-bottom: 2px solid #00A8CC;
+            border-right: 1px solid #2a3f5f;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        QHeaderView::section:first {
+            border-top-left-radius: 8px;
+        }
+
+        QHeaderView::section:last {
+            border-top-right-radius: 8px;
+            border-right: none;
+        }
+
+        QLineEdit {
+            background-color: rgba(26, 35, 50, 0.9);
+            border: 2px solid #2a3f5f;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #FFFFFF;
+            selection-background-color: #00D4FF;
+        }
+
+        QLineEdit:focus {
+            border: 2px solid #00D4FF;
+            background-color: rgba(26, 35, 50, 1);
+        }
+
+        QComboBox {
+            background-color: rgba(26, 35, 50, 0.9);
+            border: 2px solid #2a3f5f;
+            border-radius: 0px;
+            padding: 10px 30px 10px 15px;
+            color: #FFFFFF;
+            min-width: 150px;
+        }
+
+        QComboBox:focus {
+            border: 2px solid #00D4FF;
+        }
+
+        QComboBox::drop-down {
+            border: none;
+            width: 20px;
+        }
+
+        QComboBox::down-arrow {
+            image: url(:/img/img/Seta.png);
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            background: transparent;
+            border: none;
+        }
+
+        QComboBox QAbstractItemView {
+            background-color: #1a2332;
+            border: 2px solid #00D4FF;
+            border-radius: 6px;
+            selection-background-color: #00A8CC;
+            color: #FFFFFF;
+            padding: 4px;
+        }
+
+        QPushButton {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                stop:0 #00A8CC, stop:1 #0088FF);
+            border: none;
+            border-radius: 0px;
+            padding: 12px 24px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        QPushButton:hover {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                stop:0 #00D4FF, stop:1 #00A8FF);
+        }
+
+        QPushButton:pressed {
+            background: #006688;
+        }
+
+        QPushButton#btnDangerProjeto {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                stop:0 #D946A6, stop:1 #FF6B9D);
+        }
+
+        QPushButton#btnDangerProjeto:hover {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                stop:0 #E956B6, stop:1 #FF7BAD);
+        }
+
+        QPushButton#btnSecondaryProjeto {
+            background: rgba(42, 63, 95, 0.8);
+            border: 2px solid #2a3f5f;
+        }
+
+        QPushButton#btnSecondaryProjeto:hover {
+            background: rgba(52, 73, 105, 1);
+            border: 2px solid #3a4f6f;
+        }
+
+        QLabel#labelTotalProjetos {
+            color: #00D4FF;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px 0px;
+        }
+
+        QLabel#labelBuscar, QLabel#labelCategoria {
+            color: #A0A0A0;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        /* diálogo / groupbox / radios / etc herdados pelos QDialogs */
+        QDialog {
+            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #0a0e1a, stop:1 #1a1f2e);
+        }
+        QLabel {
+            color: #E0E0E0;
+        }
+        QGroupBox {
+            border: 2px solid #2a3f5f;
+            border-radius: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            color: #00D4FF;
+            font-weight: bold;
+        }
+        QGroupBox::title {
+            subcontrol-origin: margin;
+            subcontrol-position: top left;
+            padding: 4px 10px;
+            background: #1a2332;
+            border-radius: 4px;
+        }
+        QRadioButton {
+            color: #E0E0E0;
+            spacing: 8px;
+        }
+        QRadioButton::indicator {
+            width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            border: 2px solid #2a3f5f;
+            background: #1a2332;
+        }
+        QRadioButton::indicator:checked {
+            background: qradialgradient(cx:0.5, cy:0.5, radius:0.5,
+                fx:0.5, fy:0.5, stop:0 #00D4FF, stop:0.7 #0088FF);
+            border: 2px solid #00D4FF;
+        }
+    )");
 
     m_btnRemover->setObjectName("btnDangerProjeto");
+    m_btnRecarregar->setObjectName("btnSecondaryProjeto");
     m_labelTotal->setObjectName("labelTotalProjetos");
 
     auto* root = ui->verticalLayout;
-    root->setContentsMargins(16, 16, 16, 16);
-    root->setSpacing(10);
+    root->setContentsMargins(120, 40, 120, 40);
+    root->setSpacing(20);
 
-    // ===== Header: título + +Add + Exportar CSV =====
+    // ===== Header: título + Adicionar + Exportar CSV =====
     auto* headerLayout = new QHBoxLayout();
-    auto* titulo = new QLabel("Projetos Cadastrados", this);
-    QFont ft = titulo->font();
-    ft.setBold(true);
-    ft.setPointSize(ft.pointSize() + 2);
-    titulo->setFont(ft);
+    auto* titulo = new QLabel(" Projetos Cadastrados", this);
+    titulo->setObjectName("titulo");
 
     headerLayout->addWidget(titulo);
     headerLayout->addStretch();
@@ -334,12 +552,20 @@ QLabel#labelTotalProjetos {
 
     // ===== Linha de filtros: Buscar + Categoria =====
     auto* filterLayout = new QHBoxLayout();
-    auto* lblBuscar = new QLabel("Buscar:", this);
+    filterLayout->setSpacing(12);
+
+    auto* lblBuscar = new QLabel(" Buscar:", this);
+    lblBuscar->setObjectName("labelBuscar");
     filterLayout->addWidget(lblBuscar);
+
+    m_editBusca->setPlaceholderText("Digite o nome do projeto...");
+    m_editBusca->setMinimumWidth(250);
     filterLayout->addWidget(m_editBusca);
 
-    auto* lblCat = new QLabel("Categoria:", this);
-    filterLayout->addSpacing(12);
+    filterLayout->addSpacing(20);
+
+    auto* lblCat = new QLabel(" Categoria:", this);
+    lblCat->setObjectName("labelCategoria");
     filterLayout->addWidget(lblCat);
 
     m_comboCategoria->addItem("Todos");
@@ -351,10 +577,11 @@ QLabel#labelTotalProjetos {
     root->addLayout(filterLayout);
 
     // ===== Tabela =====
-    root->addWidget(m_table);
+    root->addWidget(m_table, 1);
 
     // ===== Linha de botões: Editar / Excluir / Recarregar =====
     auto* btnLayout = new QHBoxLayout();
+    btnLayout->setSpacing(12);
     btnLayout->addWidget(m_btnEditar);
     btnLayout->addWidget(m_btnRemover);
     btnLayout->addStretch();
@@ -372,11 +599,20 @@ QLabel#labelTotalProjetos {
     m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
     m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    m_table->horizontalHeader()->setStretchLastSection(true);
+    m_table->horizontalHeader()->setStretchLastSection(false);
     m_table->verticalHeader()->setVisible(false);
     m_table->setAlternatingRowColors(true);
     m_table->setSortingEnabled(true);
     m_table->sortByColumn(0, Qt::AscendingOrder);
+    m_table->setFocusPolicy(Qt::NoFocus);
+
+    // Ajuste de largura das colunas (igual Avaliadores)
+    auto header = m_table->horizontalHeader();
+    header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(2, QHeaderView::Stretch);
+    header->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(4, QHeaderView::ResizeToContents);
 
     // Duplo clique = editar
     connect(m_table, &QTableView::doubleClicked,
@@ -501,19 +737,23 @@ void PaginaProjetos::onRemover() {
     }
 
     box.setStyleSheet(R"(
-QMessageBox {
-    background-color: #1E1E1E;
-}
-QLabel {
-    color: #FFFFFF;
-}
-QPushButton {
-    background-color: #2D2D30;
-    color: #FFFFFF;
-    border-radius: 4px;
-    padding: 6px 12px;
-}
-)");
+        QMessageBox {
+            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #0a0e1a, stop:1 #1a1f2e);
+        }
+        QLabel {
+            color: #E0E0E0;
+            padding: 10px;
+        }
+        QPushButton {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                stop:0 #00A8CC, stop:1 #0088FF);
+            border-radius: 6px;
+            padding: 8px 20px;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+    )");
 
     if (box.exec() == QMessageBox::Yes) {
         m_model->removeRow(r);
@@ -589,7 +829,6 @@ bool PaginaProjetos::carregarDoArquivo() {
             << new QStandardItem(p.value(2))
             << new QStandardItem(p.value(3));
 
-        // se arquivo antigo não tiver categoria, deixa vazio
         if (p.size() >= 5)
             row << new QStandardItem(p[4]);
         else
@@ -602,7 +841,6 @@ bool PaginaProjetos::carregarDoArquivo() {
     return true;
 }
 
-//void PaginaProjetos::recomporNextId() {} // <-- REMOVER ESTA LINHA SE EXISTIR
 void PaginaProjetos::recomputarNextId() {
     int maxId = 0;
     for (int r = 0; r < m_model->rowCount(); ++r) {
@@ -618,9 +856,9 @@ void PaginaProjetos::recomputarNextId() {
 void PaginaProjetos::atualizarTotal() {
     const int total = m_filter ? m_filter->rowCount() : m_model->rowCount();
     if (total == 1)
-        m_labelTotal->setText("1 projeto encontrado");
+        m_labelTotal->setText(" 1 projeto encontrado");
     else
-        m_labelTotal->setText(QString("%1 projetos encontrados").arg(total));
+        m_labelTotal->setText(QString(" %1 projetos encontrados").arg(total));
 }
 
 // ================== EXPORTAR CSV ==================
@@ -648,7 +886,6 @@ void PaginaProjetos::onExportCsv() {
     out.setCodec("UTF-8");
 #endif
 
-    // Cabeçalho pra ficar limpo no Excel
     out << "ID;Nome;Descricao;Responsavel;Categoria\n";
 
     for (int r = 0; r < m_model->rowCount(); ++r) {

@@ -337,7 +337,8 @@
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/QtPublicWalkLibsHelpers.cmake",
 		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/QtPublicWindowsHelpers.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake",
-		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6Dependencies.cmake"
+		"C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6/Qt6Dependencies.cmake",
+		"C:/Users/Usuario/Documents/InterfaceAvaliacoes/resources.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/Usuario/Documents/InterfaceAvaliacoes",
 	"CROSS_CONFIG" : false,
