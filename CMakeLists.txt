@@ -19,7 +19,7 @@ set(UI_SOURCES
     ui/telas/paginaprojetos.h    ui/telas/paginaprojetos.cpp    ui/telas/paginaprojetos.ui
     ui/telas/paginaavaliadores.h ui/telas/paginaavaliadores.cpp ui/telas/paginaavaliadores.ui
     ui/telas/paginanotas.h       ui/telas/paginanotas.cpp       ui/telas/paginanotas.ui
-    ui/telas/paginafichas.h      ui/telas/paginafichas.cpp      ui/telas/paginafichas.ui  # ✅ inclui aqui também
+    ui/telas/paginafichas.h      ui/telas/paginafichas.cpp      ui/telas/paginafichas.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
