@@ -77,7 +77,7 @@ Este sistema foi desenvolvido para resolver um problema real: a dificuldade de c
 ## Demonstração
 
 ### Tela de Login
-<img src="assets/LoginReadme.png" alt="Página de Login" width="500">
+<img src="assets/LoginReadme.png" alt="Página de Login" width="400">
 
 ### Dashboard Administrativo
 ![Janela Principal](assets/telabotoes.png)
@@ -175,12 +175,6 @@ Sistema de arquivos simples e eficiente:
 - **QtWidgets:** componentes de interface (QMainWindow, QDialog, QTableView)
 - **QtGui:** modelos de dados (QStandardItemModel)
 - **QtPrintSupport:** geração de relatórios (opcional)
-
-### Padrões e Técnicas
-- Signals/Slots para comunicação entre componentes
-- Model/View para exibição de dados tabulares
-- RAII para gerenciamento de recursos
-- Separação UI/Lógica usando arquivos .ui do Qt Designer
 
 ---
 
