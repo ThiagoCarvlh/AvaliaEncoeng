@@ -59,12 +59,6 @@ Este sistema foi desenvolvido para resolver um problema real: a dificuldade de c
 - Exemplos: Apresentação, Inovação, Domínio Técnico, Relevância
 - Reutilização de fichas para múltiplas avaliações
 
-### Sistema de Vínculos Inteligente
-- Interface dedicada para associar avaliadores a projetos
-- Controle fino de quem avalia cada projeto
-- Avaliadores veem apenas o que lhes foi atribuído
-- Evita conflitos e garante organização
-
 ### Avaliação Simplificada
 - Interface limpa para preenchimento de notas
 - Seleção de ficha apropriada para cada projeto
@@ -143,11 +137,6 @@ sistema-avaliacao/
 - **Avaliadores:** gestão da banca avaliadora
 - **Fichas:** criação de critérios de avaliação
 - **Notas:** lançamento, edição e relatórios
-
-**Diálogos de Suporte**
-- **Vincular Avaliadores:** associação projeto-avaliador
-- **Selecionar Ficha:** escolha da ficha adequada
-- **Avaliar Projeto:** formulário de preenchimento de notas
 
 **Módulo de Vínculos (`vinculos.h/.cpp`)**
 - Lógica central de relacionamentos
@@ -232,24 +221,6 @@ cd sistema-avaliacao-projetos
 5. Clique em **Configure Project**
 6. `Build → Run` ou `Ctrl+R`
 
-#### 3. Compile via linha de comando
-```bash
-mkdir build && cd build
-cmake ..
-cmake --build .
-```
-
-#### 4. Execute
-```bash
-# Linux/macOS
-./sistema-avaliacao
-
-# Windows
-sistema-avaliacao.exe
-```
-
----
-
 ## Casos de Uso
 
 ### Feira de Ciências do Ensino Médio
@@ -291,16 +262,9 @@ sistema-avaliacao.exe
 - [ ] Temas personalizáveis
 - [ ] Interface responsiva
 
-**Funcionalidades**
-- [ ] Múltiplos eventos simultâneos
-- [ ] Comentários por critério
-- [ ] Sistema de notificações
-- [ ] Exportação para PDF
-- [ ] Importação em lote (CSV/Excel)
-
 ---
 
-Para reportar bugs ou solicitar features, utilize as [Issues do GitHub](https://github.com/SEU_USUARIO/sistema-avaliacao-projetos/issues).
+Para reportar bugs ou solicitar features, utilize as [Issues do GitHub](https://github.com/ThiagoCarvlh/AvaliaEncoeng/issues).
 
 ---
 ## Equipe de Desenvolvimento do código 
