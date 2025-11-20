@@ -295,7 +295,7 @@ Para reportar bugs ou solicitar features, utilize as [Issues do GitHub](https://
 
 ## Agradecimentos
 
-Desenvolvido como projeto de conclusão de curso, com o objetivo de aplicar conhecimentos em:
+Desenvolvido como projeto para o evento ENCOENG da Faculdade Fucapi, com o objetivo de aplicar conhecimentos em:
 - Engenharia de Software
 - Desenvolvimento com C++ moderno
 - Frameworks de interface gráfica
