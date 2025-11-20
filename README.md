@@ -83,7 +83,7 @@ Este sistema foi desenvolvido para resolver um problema real: a dificuldade de c
 ## Demonstração
 
 ### Tela de Login
-<img src="assets/TelaLogin.png" alt="Página de Login" width="500">
+<img src="assets/LoginReadme.png" alt="Página de Login" width="500">
 
 ### Dashboard Administrativo
 ![Janela Principal](assets/telabotoes.png)
